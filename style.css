@@ -1,0 +1,89 @@
+:root{
+  --bg:#fbfbfc;
+  --card:#ffffff;
+  --muted:#6b7280;
+  --accent1:#60a5fa; /* soft blue */
+  --accent2:#f9a8d4; /* soft pink */
+  --pastel1: rgba(147,197,253,0.6);
+  --pastel2: rgba(167,243,208,0.6);
+  --pastel3: rgba(250,177,160,0.6);
+  --radius:14px;
+  --glass: rgba(255,255,255,0.8);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;background:var(--bg);color:#111}
+a{color:inherit}
+.topbar{
+  position:fixed;left:0;right:0;top:0;height:68px;background:rgba(255,255,255,0.8);
+  display:flex;align-items:center;justify-content:space-between;padding:0 22px;backdrop-filter:blur(6px);
+  box-shadow:0 8px 24px rgba(16,24,40,0.04);z-index:1000
+}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700}
+.mark{width:34px;height:34px;border-radius:8px;background:linear-gradient(135deg,var(--accent2),var(--accent1))}
+
+.navlinks{display:flex;align-items:center;gap:12px}
+.navlinks a{color:var(--muted);text-decoration:none;padding:8px 10px;border-radius:8px}
+.navlinks a:hover{color:#111;background:rgba(0,0,0,0.03)}
+.btn-cta{background:linear-gradient(90deg,var(--accent1),#7c3aed);color:#fff;border:none;padding:8px 12px;border-radius:999px;cursor:pointer}
+
+.top-spacer{height:68px}
+
+/* HERO */
+.hero{position:relative;height:68vh;display:flex;align-items:center;justify-content:center;overflow:hidden;border-bottom:1px solid #eef2f7}
+.hero-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.85) contrast(100%);}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.06))}
+.hero-content{position:relative;text-align:center;padding:20px}
+.kicker{display:inline-block;padding:6px 12px;border-radius:999px;background:#fff;font-weight:600;color:var(--muted);box-shadow:0 6px 20px rgba(16,24,40,0.04)}
+.hero-title{font-size:clamp(28px,4vw,44px);margin:18px 0 10px;color:#0f172a}
+.hero-sub{color:var(--muted);max-width:900px;margin:0 auto 16px}
+.hero-ctas{display:flex;gap:10px;justify-content:center}
+.btn{padding:10px 14px;border-radius:10px;border:1px solid rgba(0,0,0,0.04);background:#fff;cursor:pointer}
+.btn.primary{background:linear-gradient(90deg,var(--accent1),#7c3aed);color:#fff;border:none}
+.btn.ghost{background:transparent;border:1px solid rgba(0,0,0,0.06);color:var(--muted)}
+
+/* PANELS */
+.panel{padding:56px 20px}
+.container{max-width:1100px;margin:0 auto}
+.section-title{font-size:clamp(20px,3vw,28px);margin-bottom:6px;font-weight:800}
+.section-sub{color:var(--muted);margin-bottom:18px}
+
+/* GRID */
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+.card{grid-column:span 12;background:var(--card);border-radius:var(--radius);padding:18px;box-shadow:0 6px 24px rgba(16,24,40,0.04)}
+@media(min-width:860px){
+  .col-6{grid-column:span 6}
+  .col-4{grid-column:span 4}
+  .col-8{grid-column:span 8}
+}
+
+/* Inputs */
+input,select,textarea{width:100%;padding:10px;border-radius:10px;border:1px solid #e6e6e9;background:#fff;color:#111}
+.row{display:flex;gap:10px;align-items:center}
+.form-grid{display:grid;grid-template-columns:1fr;gap:8px}
+@media(min-width:860px){ .form-grid{grid-template-columns:repeat(5,1fr)} .form-grid .action{grid-column:5}}
+
+/* lists */
+.list .item{display:flex;justify-content:space-between;align-items:center;padding:12px;border-radius:10px;border:1px solid #f1f5f9;margin-bottom:8px;background:#fff}
+.muted{color:var(--muted)}
+.small{font-size:0.85rem}
+
+/* chat */
+.chat{background:#fff;border-radius:10px;padding:10px;border:1px solid #eef2f7}
+.bubble{padding:8px 10px;border-radius:8px;margin:6px 0;display:inline-block}
+.me{background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#021124}
+.bot{background:#f3f4f6;color:#111}
+
+/* modal */
+.modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(2,6,23,0.45);z-index:1200}
+.sheet{width:min(520px,96vw);padding:18px;border-radius:12px;background:#fff;box-shadow:0 40px 80px rgba(2,6,23,0.12)}
+.close-x{position:absolute;right:18px;top:18px;border:none;background:transparent}
+
+/* footer */
+.footer{padding:28px 20px;text-align:center;color:var(--muted);border-top:1px solid #f1f5f9;margin-top:30px}
+
+/* responsive tweaks */
+@media(max-width:640px){
+  .navlinks{display:none}
+  .hero{height:56vh}
+  .section-title{font-size:20px}
+}

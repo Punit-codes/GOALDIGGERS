@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>FinBuddy — Light Budget Dashboard</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&family=Montserrat:wght@600;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet">
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1"></script>
+
+  <!-- AOS (Animate On Scroll) -->
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- NAV -->
+  <header class="topbar">
+    <div class="brand"><div class="mark"></div><span>FinanceAI</span></div>
+    <nav class="navlinks">
+      <a href="#budget">Budget Planner</a>
+      <a href="#invest">Investment Tips</a>
+      <a href="#tax">Tax Advisor</a>
+      <a href="#assistant">AI Assistant</a>
+      <button class="btn-cta" onclick="openAuth()">Get Started</button>
+    </nav>
+  </header>
+  <div class="top-spacer"></div>
+
+  <!-- HERO (light image background) -->
+  <section class="hero" id="home">
+    <img class="hero-bg" src="https://media.istockphoto.com/photos/abstract-financial-chart-with-graph-in-double-exposure-style-on-white-picture-id863469700?b=1&k=20&m=863469700&s=170667a&w=0&h=TKdTPINmTEMyE8-__kmcswScB6wId8Zflw5j1rnswv4=" alt="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content" data-aos="fade-up">
+      <div class="kicker">AI • Budget • Invest • Tax</div>
+      <h1 class="hero-title">Smart budgeting, beautifully presented</h1>
+      <p class="hero-sub">Date-wise expense tracker, category breakdown, SIP calculator and tax estimator — all in a clean light dashboard.</p>
+      <div class="hero-ctas">
+        <a class="btn primary" href="#budget">Start Budgeting</a>
+        <a class="btn ghost" href="#assistant"></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- BUDGET SECTION -->
+  <section class="panel" id="budget">
+    <div class="container">
+      <h2 class="section-title" data-aos="fade-up">Budget Planner</h2>
+      <p class="section-sub" data-aos="fade-up" data-aos-delay="60">Set an overall budget, add date-wise expenses, and analyze spending by date and category.</p>
+
+      <div class="grid" data-aos="fade-up" data-aos-delay="120">
+        <!-- Controls -->
+        <div class="card col-6">
+          <h3>Overall Budget</h3>
+          <div class="row">
+            <input id="budgetInput" type="number" placeholder="Monthly budget (₹)">
+            <button class="btn action" onclick="setBudget()">Save</button>
+          </div>
+          <p id="budgetStatus" class="muted">No budget set yet.</p>
+
+          <hr class="sep">
+
+          <h3>Add Expense</h3>
+          <div class="form-grid">
+            <input id="expDate" type="date">
+            <input id="expName" placeholder="Expense description">
+            <input id="expAmt" type="number" placeholder="Amount (₹)">
+            <select id="expCat">
+              <option>Food & Dining</option>
+              <option>Travel</option>
+              <option>Shopping</option>
+              <option>Bills & Utilities</option>
+              <option>Investments</option>
+              <option>Other</option>
+            </select>
+            <button class="btn action" onclick="addExpense()">Add Expense</button>
+          </div>
+        </div>
+
+        <!-- Expense list -->
+        <div class="card col-6">
+          <h3>Expenses (Date-wise)</h3>
+          <div class="list" id="expenseList" style="max-height:320px;overflow:auto"></div>
+        </div>
+
+        <!-- Charts -->
+        <div class="card col-8">
+          <h3>Spending by Date</h3>
+          <canvas id="dateChart" height="120"></canvas>
+        </div>
+
+        <div class="card col-4">
+          <h3>Spending by Category</h3>
+          <canvas id="catChart" height="120"></canvas>
+          <p class="muted small">Use consistent categories for clearer insights.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INVEST -->
+  <section class="panel light" id="invest">
+    <div class="container">
+      <h2 class="section-title" data-aos="fade-up">Investment Tips</h2>
+      <p class="section-sub" data-aos="fade-up" data-aos-delay="60">Quick SIP calculator and simple, actionable guidance.</p>
+
+      <div class="grid" data-aos="fade-up" data-aos-delay="120">
+        <div class="card col-6">
+          <h3>SIP Calculator</h3>
+          <div class="row">
+            <input id="sipAmt" type="number" placeholder="Monthly SIP (₹)">
+            <input id="sipRate" type="number" value="12" placeholder="Expected annual return (%)">
+            <input id="sipYears" type="number" placeholder="Years">
+            <button class="btn action" onclick="calcSIP()">Calculate</button>
+          </div>
+          <p id="sipResult" class="muted" style="margin-top:8px"></p>
+        </div>
+
+        <div class="card col-6">
+          <h3>Top Tips</h3>
+          <ul class="tips">
+            <li>Automate SIPs and increase yearly.</li>
+            <li>Prefer low-cost index funds for core allocation.</li>
+            <li>Keep 3–6 months emergency fund before risk investing.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TAX -->
+  <section class="panel" id="tax">
+    <div class="container">
+      <h2 class="section-title" data-aos="fade-up">Tax Advisor</h2>
+      <p class="section-sub" data-aos="fade-up" data-aos-delay="60">Quick estimates to plan ahead (educational demo).</p>
+
+      <div class="grid" data-aos="fade-up" data-aos-delay="120">
+        <div class="card col-8">
+          <div class="row">
+            <input id="income" type="number" placeholder="Annual taxable income (₹)">
+            <button class="btn action" onclick="calcTax()">Estimate Tax</button>
+          </div>
+          <p id="taxResult" class="muted" style="margin-top:8px"></p>
+        </div>
+
+        <div class="card col-4">
+          <h3>Save Smart</h3>
+          <p class="muted small">Common routes: 80C (ELSS/PPF), 80D (health), HRA, standard deductions. Consult a tax professional before filing.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BANK -->
+  <section class="panel light" id="bank">
+    <div class="container">
+      <h2 class="section-title" data-aos="fade-up">Bank Connect (Demo)</h2>
+      <p class="section-sub" data-aos="fade-up" data-aos-delay="60">Upload CSV statements to auto-import transactions (local parsing).</p>
+
+      <div class="grid" data-aos="fade-up" data-aos-delay="120">
+        <div class="card col-6">
+          <input id="csvFile" type="file" accept=".csv">
+          <button class="btn action" onclick="parseCSV()">Import CSV</button>
+          <div id="bankList" class="muted small" style="margin-top:10px;max-height:220px;overflow:auto"></div>
+        </div>
+        <div class="card col-6">
+          <h3>How it works</h3>
+          <p class="muted small">We parse the CSV locally in your browser and categorize rows using simple rules (demo). For production integrate a secure aggregator like Plaid.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI ASSISTANT -->
+  <section class="panel" id="assistant">
+    <div class="container">
+      <h2 class="section-title" data-aos="fade-up">AI Assistant</h2>
+      <p class="section-sub" data-aos="fade-up" data-aos-delay="60">Ask quick questions — demo rule-based replies included.</p>
+
+      <div class="grid" data-aos="fade-up" data-aos-delay="120">
+        <div class="card col-8">
+          <div id="chatBox" class="chat" style="height:220px;overflow:auto"></div>
+          <div class="row" style="margin-top:10px">
+            <input id="chatInput" placeholder="Ask about SIP, taxes or budgeting...">
+            <button class="btn action" onclick="sendMsg()">Send</button>
+          </div>
+        </div>
+
+        <div class="card col-4">
+          <h3>Pro Tip</h3>
+          <p class="muted small">For production, host an LLM on server and secure keys. This demo only provides helpful suggestions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AUTH MODAL (local demo) -->
+  <div class="modal" id="authModal" role="dialog" aria-hidden="true">
+    <div class="sheet" data-aos="zoom-in">
+      <button class="close-x" onclick="closeAuth()"><i class="ri-close-line"></i></button>
+      <h3>Sign in (demo)</h3>
+      <div class="grid-2" style="margin-top:10px">
+        <input id="user" placeholder="Username">
+        <input id="pass" placeholder="Password" type="password">
+      </div>
+      <div style="display:flex;gap:10px;margin-top:12px">
+        <button class="btn primary" onclick="login()">Login</button>
+        <button class="btn" onclick="signup()">Sign Up</button>
+      </div>
+      <p id="authMsg" class="muted small" style="margin-top:8px"></p>
+    </div>
+  </div>
+
+  <footer class="footer muted">© 2025 FinanceAI — Demo UI • Replace images with your own for production</footer>
+
+  <script src="script.js"></script>
+  <script> AOS.init({ once:true, duration:800 }); </script>
+</body>
+</html>
