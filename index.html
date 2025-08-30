@@ -21,7 +21,7 @@
 <body>
   <!-- NAV -->
   <header class="topbar">
-    <div class="brand"><div class="mark"></div><span>FinanceAI</span></div>
+    <div class="brand"><div class="mark"></div><span>FinBuddy</span></div>
     <nav class="navlinks">
       <a href="#budget">Budget Planner</a>
       <a href="#invest">Investment Tips</a>
@@ -42,7 +42,7 @@
       <p class="hero-sub">Date-wise expense tracker, category breakdown, SIP calculator and tax estimator — all in a clean light dashboard.</p>
       <div class="hero-ctas">
         <a class="btn primary" href="#budget">Start Budgeting</a>
-        <a class="btn ghost" href="#assistant"></a>
+        <a class="btn ghost" href="#assistant">Ask Ai</a>
       </div>
     </div>
   </section>
@@ -57,11 +57,15 @@
         <!-- Controls -->
         <div class="card col-6">
           <h3>Overall Budget</h3>
-          <div class="row">
-            <input id="budgetInput" type="number" placeholder="Monthly budget (₹)">
-            <button class="btn action" onclick="setBudget()">Save</button>
-          </div>
-          <p id="budgetStatus" class="muted">No budget set yet.</p>
+<div class="row">
+  <input id="budgetInput" type="number" placeholder="Monthly budget (₹)">
+  <button class="btn action" onclick="setBudget()">Save</button>
+</div>
+<div class="row" style="margin-top:8px">
+  <button class="btn action ghost" onclick="resetBudget()">Reset Budget</button>
+</div>
+<p id="budgetStatus" class="muted">No budget set yet.</p>
+
 
           <hr class="sep">
 
