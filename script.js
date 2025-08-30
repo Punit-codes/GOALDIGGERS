@@ -262,3 +262,101 @@ window.closeAuth = closeAuth;
 window.signup = signup;
 window.login = login;
 window.sendMsg = sendMsg;
+
+function resetBudget() {
+  // Reset budget
+  document.getElementById('budgetInput').value = '';
+  document.getElementById('budgetStatus').textContent = 'No budget set yet.';
+
+  // Clear expenses
+  expenses = []; // assuming you have an array called expenses
+  document.getElementById('expenseList').innerHTML = '';
+
+  // Reset charts
+  if (window.dateChart) {
+    window.dateChart.data.labels = [];
+    window.dateChart.data.datasets[0].data = [];
+    window.dateChart.update();
+  }
+  if (window.catChart) {
+    window.catChart.data.labels = [];
+    window.catChart.data.datasets[0].data = [];
+    window.catChart.update();
+  }
+}
+
+// ====== Simple Demo AI Assistant ======
+function sendMsg() {
+  const input = document.getElementById('chatInput');
+  const text = (input.value || '').trim();
+  if (!text) return;
+
+  addBubble(text, 'me');
+  input.value = '';
+
+  const typingBubble = addBubble("Typing...", 'bot', true);
+
+  setTimeout(() => {
+    typingBubble.remove();
+    const reply = getDemoReply(text);
+    typeText(reply);
+  }, 700);
+}
+
+function addBubble(text, who, isTyping = false) {
+  const box = document.getElementById('chatBox');
+  const div = document.createElement('div');
+  div.className = 'bubble ' + (who === 'me' ? 'me' : 'bot');
+  div.textContent = text;
+  if (isTyping) div.classList.add('typing');
+  box.appendChild(div);
+  box.scrollTop = box.scrollHeight;
+  return div;
+}
+
+function typeText(text) {
+  return new Promise((resolve) => {
+    const box = document.getElementById('chatBox');
+    const div = document.createElement('div');
+    div.className = 'bubble bot';
+    box.appendChild(div);
+    box.scrollTop = box.scrollHeight;
+
+    let i = 0;
+    const interval = setInterval(() => {
+      div.textContent += text[i];
+      i++;
+      box.scrollTop = box.scrollHeight;
+      if (i >= text.length) {
+        clearInterval(interval);
+        resolve();
+      }
+    }, 20);
+  });
+}
+
+function getDemoReply(text) {
+  const msg = text.toLowerCase();
+
+  if (msg.includes("sip")) {
+    return "💡 SIP helps you invest regularly. Example: ₹5,000 monthly for 10 years at 12% may grow to ~₹11 lakh.";
+  }
+  if (msg.includes("tax")) {
+    return "💡 Tax saving routes: 80C (PPF, ELSS), 80D (health insurance), HRA. Consult a CA before filing.";
+  }
+  if (msg.includes("budget")) {
+    return "💡 Try the 50/30/20 rule: 50% needs, 30% wants, 20% savings/investments.";
+  }
+  if (msg.includes("invest")) {
+    return "💡 Diversify: 60% equity (index funds), 20% debt, 20% emergency/short-term funds.";
+  }
+  if (msg.includes("loan")) {
+    return "💡 Keep EMIs under 30–40% of income. Prepay high-interest loans early.";
+  }
+  if (msg.includes("hello") || msg.includes("hi")) {
+    return "👋 Hello! I can answer about SIP, taxes, budgeting, investments, or loans.";
+  }
+
+  return "🤖 I'm a demo AI. Try asking about SIP, tax, budget, investments, or loans!";
+}
+
